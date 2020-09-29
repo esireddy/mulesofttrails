@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<file:config name="File_Config" doc:name="File Config" doc:id="cff79138-0a86-42aa-95a6-486ef540a2cb" >
+		<file:connection workingDir="C:\Users\sudheer.esireddy\AnypointStudio\studio-workspace\mule-utils\output" />
+	</file:config>
+	<flow name="foreach-loopFlow" doc:id="0e10aa64-e961-4566-9eb6-b1a048a58933" >
+		<http:listener doc:name="Listener" doc:id="839bd7f5-7c3b-42ec-9194-267bf6ab2556" config-ref="HTTP_Listener_config" path="/foreach"/>
+		<file:read doc:name="Read" doc:id="55852dd4-d056-4e3d-9ec6-2ed3dc06bade" config-ref="File_Config" path="C:\Users\sudheer.esireddy\AnypointStudio\studio-workspace\mule-utils\src\main\resources\MOCK_DATA.json"/>
+		<foreach doc:name="For Each" doc:id="ed5f75b6-26b9-40ec-bd12-cd20445575b4">
+			<logger level="INFO" doc:name="Logger" doc:id="3694d08d-b077-4505-8e23-f9fdae2c894d" message="#[payload]"/>
+			<file:write doc:name="Write" doc:id="9bb106b0-d423-4006-9743-30aa4f6f08a7" config-ref="File_Config" path='#["content" ++ vars.counter ++ ".json"]'/>
+		</foreach>
+	</flow>
+</mule>

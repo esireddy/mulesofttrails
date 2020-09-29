@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="choice-routerFlow" doc:id="9151198f-36e7-43e2-8b62-fb6fd4df55b7" >
+		<http:listener doc:name="Listener" doc:id="d33a1118-cb40-4707-bc2b-45989434822a" config-ref="HTTP_Listener_config" path="/first-choice"/>
+		<set-variable value="#[output application/java---
+attributes.headers.Choice as Number]" doc:name="Set Variable" doc:id="6e8881f1-e14b-446e-b142-4f3ca026fc9c" variableName="currentChoice"/>
+		<choice doc:name="Choice" doc:id="d63327a4-c072-4a9b-aeaf-8c98905902f6" >
+			<when expression="#[vars.currentChoice &gt; 0 and vars.currentChoice == 1]">
+				<logger level="INFO" doc:name="Logger" doc:id="6961a5f7-8c6c-45e5-b370-907c060479dc" message="This is choice ~ 1"/>
+				<set-variable value="This is choice ~ 1" doc:name="Set Variable" doc:id="698ff8fd-d92e-4a29-9887-03d0f7a1f920" variableName="Response"/>
+			</when>
+			<when expression="#[vars.currentChoice &gt; 0 and vars.currentChoice == 2]">
+				<logger level="INFO" doc:name="Logger" doc:id="4e7e7dc5-4eb3-41b3-bf70-33761cc5b51a" message="This is choice ~ 2"/>
+				<set-variable value="This is choice ~ 2" doc:name="Set Variable" doc:id="4a9e4f59-7bc0-404e-b59f-2a0d03005052" variableName="Response"/>
+			
+</when>
+			<when expression="#[vars.currentChoice &gt; 0 and vars.currentChoice == 3]">
+				<logger level="INFO" doc:name="Logger" doc:id="9d435930-b95d-4572-a8e1-29ce446d683a" message="This is choice ~ 3"/>
+				<set-variable value="This is choice ~ 3" doc:name="Set Variable" doc:id="63b933c7-9fa0-406a-93f5-6d58bfe86c81" variableName="Response"/>
+			
+</when><when expression="#[vars.currentChoice &gt; 0 and vars.currentChoice == 4]">
+				<logger level="INFO" doc:name="Logger" doc:id="1fb9dec3-1ae9-427b-9bec-45206f9060a0" message="This is choice ~ 4"/>
+				<set-variable value="This is choice ~ 3" doc:name="Set Variable" doc:id="e164b9ef-76d9-407c-8fc3-293b73a0bf4a" variableName="Response"/>
+			
+</when>
+			<otherwise >
+				<logger level="INFO" doc:name="Logger" doc:id="214861f9-36aa-4a32-b5d6-821c6bb7c11b" message="This is Invalid choice"/>
+				<set-variable value="This is Invalid choice" doc:name="Set Variable" doc:id="b916512b-484a-42f3-b7b1-38e123cff785" variableName="Response"/>
+			</otherwise>
+		</choice>
+		<set-payload value="#[vars.Response]" doc:name="Set Payload" doc:id="45038802-9f35-4198-b128-93c5ff43f398" />
+	</flow>
+</mule>
